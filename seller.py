@@ -34,7 +34,6 @@ def sell():
 def buyer():
     if request.method == 'POST':
         itemid=dbHandler.fetchItemId(request.form['product'])
-        userid=dbHandler.fetchUserId(request.form['dist'])
         buylist=companydb.fetchbuy(itemid)
         return render_template('buy.html', buylist = buylist)
     else:
@@ -42,8 +41,7 @@ def buyer():
 
 @app.route('/buy', methods=['GET','POST'])
 def buy():
-    
-        return render_template('buy.html')
+    return render_template('buy.html')
 
 @app.route('/createnew', methods=['POST','GET'])
 def createnew():
