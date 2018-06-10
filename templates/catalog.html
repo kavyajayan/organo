@@ -9,14 +9,15 @@
     <meta name="author" content="">
 
     <title>Organo - Seller</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/thumbnail-gallery.css">
     <link href="../static/css/main.css" rel="stylesheet">
 
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="..sellerui/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- Custom styles for this template -->
-    <link href="../static/css/thumbnail-gallery.css" rel="stylesheet">
+    <!-- <link href="..sellerui/css/thumbnail-gallery.css" rel="stylesheet"> -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -39,16 +40,16 @@
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sellerindex">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/orders">Orders
+             </a>
+                    </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/sellerinfo">Home
-                  <span class="sr-only">(current)</span>
-              </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/orders">Orders</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/catalog">Catalog</a>
+                        <span class="sr-only">(current)</span>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Payments</a>
@@ -67,47 +68,32 @@
     </nav>
 
     <!-- Page Content -->
-    <form action="/cropinfo" method="POST">
+    <form action="/catalog" method="POST">
         <div class="container">
 
-            <h1 class="my-4 text-center text-lg-left">Crops</h1>
+            <h1 class="my-4 text-center text-lg-left">Available products</h1>
 
             <div class="row text-center text-lg-left">
 
 
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <a href="#" class="d-block mb-4 h-100">
-                        <div class="card">
-                            <img class="card-img-top" src="../static/img/tomato.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <button class="btn btn-primary btn-lg" name="btnclicked" value="tomato" type="submit">Tomato</button>
-                            </div>
-                        </div>
-                    </a>
-                </div>
 
+                {% for items in catlist %}
                 <div class="col-lg-3 col-md-4 col-xs-6">
-                    <a href="#" class="d-block mb-4 h-100">
-                        <div class="card">
-                            <img class="card-img-top" src="../static/img/banana.jpeg" alt="Card image cap">
-                            <div class="card-body">
-                                <button class="btn btn-primary btn-lg" name="btnclicked" value="banana" type="submit">Banana</button>
-                            </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Item Id:{{items[1]}}</h5>
+                            <p class="card-text">Quantity:{{items[2]}}</p>
+                            <p class="card-text">Unit:{{items[3]}}</p>
+                            <button name="edit" class="btn btn-primary">Edit</button>
                         </div>
-                    </a>
+                    </div>
                 </div>
+                {% endfor %}
 
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <a href="#" class="d-block mb-4 h-100">
-                        <div class="card">
-                            <img class="card-img-top" src="../static/img/ladies.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <button class="btn btn-primary btn-lg" name="btnclicked" value="ladiesfinger" type="submit">Ladiesfinger</button>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+
             </div>
+
+
         </div>
     </form>
     <!-- /.container -->

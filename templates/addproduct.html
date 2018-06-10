@@ -5,19 +5,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Add Products</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../static/css/thumbnail-gallery.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
 </head>
 
+
 <body>
-    <form action="/addproduct" method="POST">
-        Category<input type="text" name="category"></input>
-        Item<input type="text" name="item"></input>
-        Quantity<input type="text" name="quantity"></input>
-        Unit<input type="radio" name="unit" value="kg">Kg</input>
-        <input type="radio" name="unit" value="lt">litres</input>
-        <input type="radio" name="unit" value="kg">Pieces</input>
-        <!-- <button type="submit" onclick="genPrice()">Generate price</button> -->
-        <button type="submit" name="addproductbtn">Add Product</button>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+          <a class="navbar-brand" href="#"><img src="../static/img/logo.png" alt="logo" style="height: 50px;"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="/sellerindex">Home
+              <span class="sr-only">(current)</span>
+            </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/orders">Orders</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Catalog</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Payments</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Logout</a>
+                  </li>
+              </ul>
+          </div>
+
+
+      </div>
+  </nav>
+
+  <div class="container">
+
+
+    <h1 class="my-4 text-center text-lg-left">Add Products</h1>
+
+    <form action="/addproduct" method="POST" id="add-product-form">
+      <div class="form-group veg">
+        <label for="exampleInputEmail1"><b>Find Product</b></label>
+        <select class="form-control" name="item">
+        <option>--Select Product--</option>
+        <option>Tomato</option>
+        <option>Banana</option>
+        <option>Ladies Finger</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Category</label>
+        <select class="form-control" name="category">
+        <option >--Enter Category--</option>
+        <option>Vegetables</option>
+        <option>Milk</option>
+        <option>Egg & Meat</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Quantity</label>
+        <input class="form-control" name="quantity">
+
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Type</label>
+        <select class="form-control" name="unit">
+        <option>--Enter Type--</option>
+        <option>Kg</option>
+        <option>ltr</option>
+        <option>pcs</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+
+  </div>
+
+         <footer class="py-5 bg-dark">
+             <div class="container">
+                 <p class="m-0 text-center text-white">Copyright &copy; Organo 2017</p>
+             </div>
+             <!-- /.container -->
+         </footer>
+
+         <!-- Bootstrap core JavaScript -->
+         <script src="js/bin/jquery.min.js"></script>
+         <script src="js/bootstrap.bundle.min.js"></script>
+
+
+
+
 </body>
 
 </html>

@@ -1,11 +1,64 @@
 import companydb
-from flask import Flask, flash, render_template, redirect, request, make_response
+import sellerdb
+import models as dbHandler
+from flask import Flask, flash, render_template, redirect, request, make_response,session,url_for
 app = Flask(__name__)
 
-@app.route('/sellerindex', methods=['GET','POST'])
-def index():
-    if request.method == 'GET':
+
+def redirect_url(default='index'):
+    return request.args.get('next') or \
+           request.referrer or \
+           url_for(default)
+
+@app.route('/', methods=['POST', 'GET'])
+def home():
+    if request.method=='POST':
+        username = request.form['username']
+        password= request.form['password']
+        if(dbHandler.checkUser(username,password)):
+            session['username']=username
+            return render_template('buyerindex.html')
+        else:
+            return render_template('index.html',error=True)
+        return render_template('index.html', error=False)
+    else:
         return render_template('index.html')
+
+@app.route('/sell', methods=['GET','POST'])
+def sell():
+    return render_template('sellerindex.html')
+
+
+
+@app.route('/buyer', methods=['GET','POST'])
+def buyer():
+    if request.method == 'POST':
+        itemid=dbHandler.fetchItemId(request.form['product'])
+        userid=dbHandler.fetchUserId(request.form['dist'])
+        #productinfo=dbHandler.fetchinfo(userid,itemid)
+        return render_template('sellerindex.html')
+    else:
+        return render_template('buyer.html')
+
+
+@app.route('/createnew', methods=['POST','GET'])
+def createnew():
+	if request.method=='POST':
+		username=request.form['username']
+		password=request.form['password']
+		email=request.form['email']
+		phone=request.form['phone']
+		district=request.form['district']
+		session['username']=username
+		dbHandler.insertUser(email,username,password,phone,district)
+		return redirect(url_for('home'))        
+
+
+
+@app.route('/sellerindex', methods=['GET','POST'])
+def sindex():
+    if request.method == 'GET':
+        return render_template('sellerindex.html')
 
 @app.route('/addproduct', methods=['GET','POST'])
 def addproduct():
@@ -14,7 +67,7 @@ def addproduct():
         itemid = 456
         #itemid = companydb.fetchitemid(request.form['category'], request.form['item'])
         companydb.insertproduct(sellerid, itemid, request.form['quantity'], request.form['unit'])
-        return ("successfully added product")
+        return render_template('sellerindex.html')
     else:
         return render_template('addproduct.html')
 
@@ -48,10 +101,64 @@ def ladiesfingerinfo():
 @app.route('/orders', methods=['GET','POST'])
 def orders():
     if request.method == 'GET':
-        sellerid = 123
-        #orderlist = fetchorders(sellerid)
-        orderlist = [('123','525','7.2','litre'), ('123','100','2.2','kg')]
+        sellerid=56
+        orderlist = companydb.fetchorders(sellerid)
         return render_template('orders.html', ordlist=orderlist)
+
+@app.route('/accept', methods=['GET', 'POST'])
+def accept():
+    if request.method == 'POST':
+        moveorder(request.form['accept'])
+        return redirect('/orders')
+
+@app.route('/reject', methods=['GET', 'POST'])
+def reject():
+    if request.method == 'POST':
+        deleteorder(request.form['reject'])
+        return redirect('/orders')
+
+@app.route('/farming', methods=['GET','POST'])
+def farming():
+    if request.method == 'POST':
+        if(request.form['farmbtn']=="fert"):
+            return render_template('fert.html')
+        if(request.form['farmbtn']=="plant"):
+            return render_template('plant.html')
+        if(request.form['farmbtn']=="compost"):
+            return render_template('compost.html')
+    else:
+        return render_template('farming.html')
+
+@app.route('/fert', methods=['GET','POST'])
+def fertilizers():
+    if request.method == 'GET':
+        return render_template('fert.html')
+
+@app.route('/plant', methods=['GET','POST'])
+def plant():
+    if request.method == 'GET':
+        return render_template('plant.html')
+
+@app.route('/compost', methods=['GET','POST'])
+def compost():
+    if request.method == 'GET':
+        return render_template('compost.html')
+
+@app.route('/catalog', methods=['GET','POST'])
+def catalog():
+    if request.method == 'GET':
+        sellerid=56
+        itemlist=companydb.fetchproducts(sellerid)
+        print(itemlist)
+        return render_template('catalog.html', catlist=itemlist)
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect(url_for('home'))
+
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__== '__main__':
     app.run()
