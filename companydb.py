@@ -1,10 +1,10 @@
 import sqlite3
 DATABASE = 'companydb.db'
 
-def insertproduct(sellerid, itemid, qty, unit):
+def insertproduct(sellerid, item, category, qty, unit):
 	con1 = sqlite3.connect(DATABASE)
 	cur1 = con1.cursor()
-	cur1.execute("INSERT INTO availproducts (sellerid, itemid, qty, unit) values (?,?,?,?)", (sellerid, itemid, qty, unit))
+	cur1.execute("INSERT INTO availproducts (sellerid,item, category, qty, unit) values (?,?,?,?,?)", (sellerid,item, category, qty, unit))
 	con1.commit()
 	con1.close()
 
@@ -33,3 +33,11 @@ def fetchorders(sellerid):
     print (datapro)
     con1.close()
     return datapro
+
+def fetchbuy(itemname):
+	con4 = sqlite3.connect(DATABASE)
+	cur4 = con4.cursor()
+	cur4.execute("SELECT * FROM availproducts where item=?",(itemname,))
+	buylist = cur4.fetchall()
+	con4.close()
+	return buylist

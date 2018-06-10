@@ -8,16 +8,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Organo - Seller</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/thumbnail-gallery.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <title>Organo - fresh food for you</title>
 
     <!-- Bootstrap core CSS -->
-    <!-- <link href="..sellerui/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/main.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <!-- <link href="..sellerui/css/thumbnail-gallery.css" rel="stylesheet"> -->
+    <link href="../static/css/thumbnail-gallery.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
 
 </head>
 
@@ -26,7 +26,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Organo</a>
+            <a class="navbar-brand" href="#"><img src="../static/img/logo.png" alt="logo" style="height: 50px;"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,19 +34,16 @@
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/sellerindex">Home</a>
-                    </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/orders">Orders
-                  <span class="sr-only">(current)</span>
-             </a>
+                        <a class="nav-link" href="/sellerindex">Home
+                <span class="sr-only">(current)</span>
+              </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Catalog</a>
+                        <a class="nav-link" href="/orders">Help</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Payments</a>
+                        <a class="nav-link" href="/sell">Sell a Product</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Profile</a>
@@ -61,41 +58,39 @@
         </div>
     </nav>
 
-    <!-- Page Content -->
-    <div class="container">
+    <form action="/buy" method="POST">
 
-        <h1 class="my-4 text-center text-lg-left">Orders</h1>
+        <div class="container">
 
-        <div class="row text-center text-lg-left">
+            <h1 class="my-4 text-center text-lg-left">List</h1>
+
+            <div class="row text-center text-lg-left">
 
 
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                {% for orders in ordlist %}
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Item Name:{{orders[2]}}</h5>
-                        <p class="card-text">BuyerID:{{orders[0]}}</p>
-                        <p class="card-text">Qty{{orders[3]}}</p>
-                        <a href="#" class="btn btn-primary">Accept</a>
-                        <a href="#" class="btn btn-primary">Reject</a>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    {% for orders in ordlist %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Seller ID:{{buylist[0]}}</h5>
+                            <p class="card-text">Quantity:{{buylist[3]}}</p>
+                            <p class="card-text">Unit:{{buylist[4]}}</p>
+                            <a class="btn btn-primary">Book</a>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+
             </div>
 
+
         </div>
-
-
-    </div>
-
-    <!-- /.container -->
-
-    <!-- Footer -->
+    </form>
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; Organo 2017</p>
         </div>
         <!-- /.container -->
+
     </footer>
 
     <!-- Bootstrap core JavaScript -->

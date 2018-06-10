@@ -17,7 +17,7 @@ def home():
         password= request.form['password']
         if(dbHandler.checkUser(username,password)):
             session['username']=username
-            return render_template('buyerindex.html')
+            return render_template('buyer.html')
         else:
             return render_template('index.html',error=True)
         return render_template('index.html', error=False)
@@ -35,11 +35,15 @@ def buyer():
     if request.method == 'POST':
         itemid=dbHandler.fetchItemId(request.form['product'])
         userid=dbHandler.fetchUserId(request.form['dist'])
-        #productinfo=dbHandler.fetchinfo(userid,itemid)
-        return render_template('sellerindex.html')
+        buylist=companydb.fetchbuy(itemid)
+        return render_template('buy.html', buylist = buylist)
     else:
         return render_template('buyer.html')
 
+@app.route('/buy', methods=['GET','POST'])
+def buy():
+    
+        return render_template('buy.html')
 
 @app.route('/createnew', methods=['POST','GET'])
 def createnew():
@@ -63,10 +67,9 @@ def sindex():
 @app.route('/addproduct', methods=['GET','POST'])
 def addproduct():
     if request.method == 'POST':
-        sellerid = 123
-        itemid = 456
+        sellerid = 56
         #itemid = companydb.fetchitemid(request.form['category'], request.form['item'])
-        companydb.insertproduct(sellerid, itemid, request.form['quantity'], request.form['unit'])
+        companydb.insertproduct(sellerid,request.form['item'], request.form['category'], request.form['quantity'], request.form['unit'])
         return render_template('sellerindex.html')
     else:
         return render_template('addproduct.html')
@@ -159,6 +162,11 @@ def logout():
     return redirect(url_for('home'))
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
+@app.route('/items', methods=['GET','POST'])
+def items():
+    if request.method == 'GET':
+        return render_template('items.html')
 
 if __name__== '__main__':
     app.run()
